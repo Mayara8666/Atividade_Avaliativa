@@ -1,82 +1,82 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 public class Fornecedor
 {
-    public string Cnpj { get; set; }
-    public string RazaoSocial { get; set; }
+    public string cnpj;
+    public string razaoSocial;
 
     public Fornecedor(string nome, string cnpj)
     {
-        RazaoSocial = nome;
-        Cnpj = cnpj;
+        razaoSocial = nome;
+        this.cnpj = cnpj;
     }
 }
 
 public class Pessoa
 {
-    public string Nome { get; set; }
-    public string Telefone { get; set; }
-    public string Logradouro { get; set; }
-    public string Email { get; set; }
-    public string Usuario { get; set; }
-    public string Senha { get; set; }
+    public string nome;
+    public string telefone;
+    public string logradouro;
+    public string email;
+    public string usuario;
+    public string senha;
 }
 
 public class Cliente : Pessoa
 {
-    public string Cpf { get; set; }
-    public string Rg { get; set; }
+    public string cpf;
+    public string rg;
 
-    public Cliente(string cpf, string nome)
+    public Cliente(string cpfValor, string nomeValor)
     {
-        Cpf = cpf;
-        Nome = nome;
+        cpf = cpfValor;
+        nome = nomeValor;
     }
 }
 
 public class Produto
 {
-    public string Descricao { get; set; }
-    public double Valor { get; set; }
+    public string descricao;
+    public double valor;
 
     public Produto() {}
 
-    public Produto(string descricao, double valor)
+    public Produto(string desc, double val)
     {
-        Descricao = descricao;
-        Valor = valor;
+        descricao = desc;
+        valor = val;
     }
 }
 
 public class NotaFiscal
 {
-    public double Numero { get; set; }
-    public Cliente Cliente { get; set; }
-    public Fornecedor Fornecedor { get; set; }
-    public List<Produto> Produtos { get; set; } = new List<Produto>();
+    public double numero;
+    public Cliente cliente;
+    public Fornecedor fornecedor;
+    public List<Produto> produtos = new List<Produto>();
 
-    public NotaFiscal(Cliente cliente, Fornecedor fornecedor)
+    public NotaFiscal(Cliente cli, Fornecedor forn)
     {
-        Cliente = cliente;
-        Fornecedor = fornecedor;
-        Numero = new Random().Next(1000, 9999);
+        cliente = cli;
+        fornecedor = forn;
+        numero = new Random().Next(1000, 9999);
     }
 
-    public void AdicionaProduto(Produto produto)
+    public void AdicionaProduto(Produto p)
     {
-        Produtos.Add(produto);
+        produtos.Add(p);
     }
 
     public void MostrarNota()
     {
-        Console.WriteLine($"\nNota Fiscal #{Numero}");
-        Console.WriteLine($"Cliente: {Cliente.Nome} - CPF: {Cliente.Cpf}");
-        Console.WriteLine($"Fornecedor: {Fornecedor.RazaoSocial} - CNPJ: {Fornecedor.Cnpj}");
+        Console.WriteLine("\nNota Fiscal #" + numero);
+        Console.WriteLine("Cliente: " + cliente.nome + " - CPF: " + cliente.cpf);
+        Console.WriteLine("Fornecedor: " + fornecedor.razaoSocial + " - CNPJ: " + fornecedor.cnpj);
         Console.WriteLine("Produtos:");
-        foreach (var p in Produtos)
+        foreach (Produto p in produtos)
         {
-            Console.WriteLine($"- {p.Descricao} | R$ {p.Valor:F2}");
+            Console.WriteLine("- " + p.descricao + " | R$ " + p.valor.ToString("F2"));
         }
     }
 }
@@ -123,3 +123,4 @@ class Program
         nota.MostrarNota();
     }
 }
+
